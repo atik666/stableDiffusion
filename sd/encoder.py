@@ -59,7 +59,7 @@ class VAE_Encoder(nn.Sequential):
             nn.SiLU(),
 
             # (Batch_size, 512, Height / 8, Width / 8) -> (Batch_size, 8, Height / 8, Width / 8)
-            nn.Conv2d(512, 8, kernel_size=3, , padding=1),
+            nn.Conv2d(512, 8, kernel_size=3, padding=1),
 
             # (Batch_size, 8, Height / 8, Width / 8) -> (Batch_size, 8, Height / 8, Width / 8)
             nn.Conv2d(8, 8, kernel_size=1, padding=0),
@@ -71,7 +71,7 @@ class VAE_Encoder(nn.Sequential):
         # x: (Batch_size, Channel, Height, Width)
         # noise: (Batch_size, Out_channels, Height/8, Width/8)
 
-        for module in self:
+        for module in self: # type: ignore # TODO: Fix type ignore if it doesn't work
             if getattr(module, 'stride', None) == (2,2):
                 # (Padding_Left, Padding_Right, Padding_Top, Padding_Bottom)
                 x = F.pad(x, (0, 1, 0, 1))
