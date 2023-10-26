@@ -95,6 +95,12 @@ class CrossAttention(nn.Module):
 
         output = output.transpose(1,2)
 
+        # print(output.shape)
+        # print(torch.size(input_shape))
+        
+        # reshape tensor to a contiguous tensor
+        output = output.contiguous()
+
         output = output.view(input_shape)
 
         output = self.out_proj(output)

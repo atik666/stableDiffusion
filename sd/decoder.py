@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
-from attntion import selfAttention
+from attention import selfAttention
 
 class VAE_AttentionBlock(nn.Module):
 
@@ -131,7 +131,8 @@ class VAE_Decoder(nn.Sequential):
 
         x /= 0.18215
 
-        for module in self: # type: ignore # TODO: Fix type ignore if it doesn't work
+        # TODO: Fix type ignore if it doesn't work
+        for module in self: # type: ignore 
             x = module(x)
 
         # (Batch_size, 3, Height, Width)

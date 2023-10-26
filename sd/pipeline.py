@@ -1,5 +1,5 @@
-from BYOL_lightning.stl10_input import HEIGHT
-from stable_diffusion.sd.diffusion import Diffusion
+#from BYOL_lightning.stl10_input import HEIGHT
+#from stable_diffusion.sd.diffusion import Diffusion
 import torch
 import numpy as np
 from tqdm import tqdm
@@ -61,7 +61,7 @@ def generate(prompt: str, uncond_prompt: str, input_image=None,
 
         if sampler_name == "ddpm":
             sampler = DDPMSampler(generator)
-            sampler.set_inference_steps(n_inference_steps)
+            sampler.set_inference_timesteps(n_inference_steps)
         else:
             raise ValueError(f"Unknown sampler {sampler_name}")
 
@@ -146,6 +146,6 @@ def get_time_embedding(timestep):
     # (160,)
     freqs = torch.pow(10000, -torch.arange(start=0, end=160, dtype=torch.float32) / 160)
     # (1, 160)
-    x = torch.tensor(timestep, dtype=torch.float32)[:, None] * freqs[None]
+    x = torch.tensor([timestep], dtype=torch.float32)[:, None] * freqs[None]
     # (1, 320)
     return torch.cat([torch.sin(x), torch.cos(x)], dim=-1)
